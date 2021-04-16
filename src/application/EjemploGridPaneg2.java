@@ -53,8 +53,8 @@ public class EjemploGridPaneg2 extends Application {
 		grid.setMargin(observaciones, new Insets(10,10,10,10));
 */
 
-		TextField nombre2 = new TextField();
-		grid.add(nombre2, 0, 5);
+		TextField nombre3 = new TextField();
+		grid.add(nombre3, 0, 5);
 
 		ComboBox edad = new ComboBox();
 
