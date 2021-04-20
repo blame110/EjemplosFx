@@ -56,6 +56,9 @@ public class EjemploGridPaneg2 extends Application {
 		TextField nombre3 = new TextField();
 		grid.add(nombre3, 0, 5);
 
+
+
+
 		ComboBox edad = new ComboBox();
 
 		edad.getItems().add("1");
