@@ -1,6 +1,10 @@
 package application;
 
+import java.io.IOException;
+
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -17,7 +21,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 
 public class EjemploMixto extends Application {
 
@@ -44,10 +50,47 @@ public class EjemploMixto extends Application {
 		MenuItem abrir = new MenuItem("Abrir");
 		MenuItem cerrar = new MenuItem("Cerrar");
 
+		nuevo.setOnAction( value ->{
+			 final Stage dialog = new Stage();
+             dialog.initModality(Modality.APPLICATION_MODAL);
+             dialog.initOwner(stage);
+             VBox dialogVbox = new VBox(20);
+             dialogVbox.getChildren().add(new Text("This is a Dialog"));
+             Scene dialogScene = new Scene(dialogVbox, 300, 200);
+             dialog.setScene(dialogScene);
+             dialog.show();
+		});
+
+		abrir.setOnAction( value ->{
+
+			Parent root;
+
+			try {
+			//Cargamos el FXML
+			root = FXMLLoader.load(getClass().getResource("EjemploFXLM.fxml"));
+
+			final Stage dialog = new Stage();
+	        dialog.initModality(Modality.APPLICATION_MODAL);
+	        dialog.initOwner(stage);
+
+	        Scene scene = new Scene(root, 300, 275);
+
+	        dialog.setTitle("FXML Welcome");
+	        dialog.setScene(scene);
+	        dialog.show();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		});
+
 		//Ponemos un evento al pulsar sobre cerrar para que cierre la aplicacion
 		cerrar.setOnAction(value -> {
 			stage.close();
 		});
+
 		archivo.getItems().addAll(nuevo,abrir,cerrar);
 
 		//En preferencias añadimos la opcion estilo
@@ -61,6 +104,12 @@ public class EjemploMixto extends Application {
 
 		//Añadimos los menus a la barra de menu
 		barraMenu.getMenus().addAll(archivo,opciones,ayuda);
+
+		MenuItem acercade = new MenuItem("Acerca de..");
+		MenuItem tutoriales = new MenuItem("Tutoriales");
+		MenuItem cargar = new MenuItem("Cargar");
+
+
 
 		principal.getChildren().add(barraMenu);
 		principal.getChildren().add(pesta);
@@ -81,7 +130,6 @@ public class EjemploMixto extends Application {
 			grid.add(new Button("Boton " + i), 0, i);
 
 		}
-
 
 		split.getItems().add(izquierda);
 		split.getItems().add(scroll);

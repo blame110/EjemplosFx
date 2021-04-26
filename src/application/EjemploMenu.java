@@ -2,16 +2,19 @@ package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class EjemMenug2 extends Application {
+public class EjemploMenu extends Application {
 
+	public VBox vbox = new VBox();
 	@Override
 	public void start(Stage stage) {
 
@@ -35,8 +38,13 @@ public class EjemMenug2 extends Application {
 		MenuItem cerrar = new MenuItem("Cerrar");
 		productos.getItems().addAll(verProductos,calculos,cerrar);
 
-		MenuItem configuracion = new MenuItem("Configuración");
+		Menu configuracion = new Menu("Configuración");
 		opciones.getItems().add(configuracion);
+		MenuItem graficos = new MenuItem("Graficos");
+		MenuItem entrada = new MenuItem("Entrada");
+
+		configuracion.getItems().addAll(graficos,entrada);
+
 
 		MenuItem tutoriales = new MenuItem("Tutoriales");
 		MenuItem acercade = new MenuItem("Acerca De");
@@ -46,10 +54,28 @@ public class EjemMenug2 extends Application {
 		barra.getMenus().addAll(productos,opciones,ayuda);
 
 
+		//Creamos un gridpane y le añadimos 100 textos
+		GridPane grid = new GridPane();
+
+		for (int i = 0; i < 100; i++) {
+
+			grid.add(new Button("Texto " + i), 0, i);
+
+		}
+
+		ScrollPane scroll = new ScrollPane();
+		scroll.setContent(grid);
 
 
 		//Añadimos la barra de menu al Vbox
-		VBox vbox = new VBox(barra);
+		VBox vbox = new VBox();
+
+		vbox.getChildren().add(barra);
+
+		vbox.getChildren().add(scroll);
+
+
+
 
 		Scene scene = new Scene(vbox,500.0,500.0);
 
