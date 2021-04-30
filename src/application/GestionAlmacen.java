@@ -14,9 +14,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import Tema3.pctrunk.*;
 
@@ -40,21 +42,24 @@ public class GestionAlmacen extends Application {
 
 		MenuBar barra = new MenuBar();
 		Menu menuAlmacen = new Menu("Almacén");
+		Menu menuAyuda = new Menu("Ayuda");
+
 
 		MenuItem cargarProductos = new MenuItem("Cargar Productos");
-
-
-
 		MenuItem cerrar = new MenuItem("Cerrar");
+
+		MenuItem acercade = new MenuItem("Acerda de..");
 
 
 
 		//añadimos los menus al menubar
-		barra.getMenus().add(menuAlmacen);
+		barra.getMenus().addAll(menuAlmacen,menuAyuda);
 
 
 		//Añadimos a los menus los menuitems
 		menuAlmacen.getItems().addAll(cargarProductos,cerrar);
+		menuAyuda.getItems().add(acercade);
+
 
 		//Creamos un gripane con los datos de los productos
 		GridPane grid = new GridPane();
@@ -102,10 +107,45 @@ public class GestionAlmacen extends Application {
 		principal.getChildren().add(barra);
 		principal.getChildren().add(grid);
 
+
+		acercade.setOnAction(value ->{
+
+			//Creamos el stage y el scene
+			Stage stgAcercade = new Stage();
+			VBox vboxAcerca = new VBox();
+
+			Scene scene = new Scene(vboxAcerca, 400.0,400.0);
+
+			//Ponemos un texto y un boton dentro del vbox
+			Text info = new Text("Este programa ha sido creado rapidamente\n por el profesor");
+			info.setTextAlignment(TextAlignment.CENTER);
+			Button acercaCerrar = new Button("Cerrar");
+			acercaCerrar.setOnAction(value1 ->{
+				stgAcercade.close();
+			});
+
+			vboxAcerca.getChildren().addAll(info,acercaCerrar);
+			vboxAcerca.setAlignment(Pos.CENTER);
+
+			//Asignamos la scene al stage y lo mostramos
+			stgAcercade.setScene(scene);
+			stgAcercade.show();
+		});
+
 		//Eventos
 		//Al pulsar sobre cerrar queremos que se cierre
 		cerrar.setOnAction(value -> {
-					stage.close();
+
+			 	AnchorPane ventanaDos = new AnchorPane();
+	            Stage ventana = new Stage();
+	            ventana.setTitle("Venta Dos");
+	            ventana.initOwner(stage);
+	            Scene scene = new Scene(ventanaDos, 600.0,400.0);
+	            ventana.setScene(scene);
+
+	            ventana.show();
+
+			//stage.close();
 				});
 
 		//Al mover el slider cambia el valor
