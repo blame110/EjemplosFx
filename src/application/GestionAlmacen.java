@@ -20,6 +20,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import Tema3.pctrunk.*;
 
 public class GestionAlmacen extends Application {
@@ -233,7 +240,63 @@ public class GestionAlmacen extends Application {
 
 		stage.setScene(scene);
 		stage.show();
+		cargarDB();
 
+	}
+
+	public int cargarDB(){
+
+		//Conexion a la base de datos, sirve para establecer comunicacion
+		//Con el servidor mysql
+		Connection con;
+
+		//Objeto que permite ejecutar sentencias en mysql, tanto select como
+		//inserts updates y deletes
+		Statement stmt;
+
+		//Objeto en el cual se almacenan los resultados de las querys
+        ResultSet res;
+
+        //Primer paso conectarse a la base de datos
+        String url = "jdbc:mysql://localhost:3306/almacenes?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false";
+        String user = "root";
+        String password = "toor";
+
+        try {
+	        //Conectamos con la base de datos pasando los parametros
+        	con = DriverManager.getConnection (url, user, password); // Obtenga el objeto de conexión de la base de datos accediendo a la URL de la base de datos
+
+        	//Creamos un statement a partir de la conexion
+	        stmt = con.createStatement();
+	        String query = "Select * from productos";
+
+
+	        //Ejecuto la query y los resultados se guardan en el resulset res
+	        res = stmt.executeQuery(query);
+
+	        //Mientras haya registros vamos recorriendo todos los datos
+	        while (res.next())
+	        {
+	        	//Con getxxx vamos sacando los datos de cada campo
+	        	String nombre = res.getString("nombre");
+	        	float precio = res.getFloat("precio");
+	        	String descripcion = res.getString("descripcion");
+
+	        	System.out.println(nombre + " " + precio + " " + descripcion);
+	        }
+
+
+
+	           //Cerramos la conexion
+	           con.close();
+        }
+        catch (SQLException se)
+        {
+        	se.printStackTrace();
+        }
+
+
+		return 0;
 	}
 
 	public static void main(String[] args) {
